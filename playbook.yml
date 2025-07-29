@@ -1,0 +1,23 @@
+---
+- hosts: master
+  tasks:
+    - name: Set master_node_ip fact dynamically
+      set_fact:
+        master_node_ip: "{{ hostvars[inventory_hostname]['ansible_env'].SSH_CONNECTION.split(' ')[2] }}"
+
+- hosts: all
+  become: true
+  roles:
+    - all
+
+- hosts: master
+  become: true
+  roles:
+    - master
+
+- hosts: slaves
+  become: true
+  vars:
+    master_node_ip: "{{ hostvars[groups['master'][0]].master_node_ip }}"
+  roles:
+    - slaves

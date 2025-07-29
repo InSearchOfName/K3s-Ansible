@@ -1,0 +1,11 @@
+[Unit]
+Description=Lightweight Kubernetes master
+After=network.target
+
+[Service]
+ExecStart=/usr/local/bin/k3s server {{ k3s_server_args }}
+Restart=on-failure
+LimitNOFILE=1048576
+
+[Install]
+WantedBy=multi-user.target

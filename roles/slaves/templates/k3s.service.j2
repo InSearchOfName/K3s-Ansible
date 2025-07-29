@@ -1,0 +1,11 @@
+[Unit]
+Description=Lightweight Kubernetes Agent
+After=network.target
+
+[Service]
+ExecStart=/usr/local/bin/k3s agent {{ k3s_agent_args }}
+Restart=on-failure
+LimitNOFILE=1048576
+
+[Install]
+WantedBy=multi-user.target

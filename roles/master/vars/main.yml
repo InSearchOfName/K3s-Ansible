@@ -1,0 +1,18 @@
+#SPDX-License-Identifier: MIT-0
+---
+# vars file for roles/master
+ports:
+  - "6443/tcp" # API Server
+  - "6444/tcp" # Certs
+  - "8472/udp" # Flannel this is a separate network so in ACLS specifiaclly target this group
+  - "10250/tcp" # Metrics
+  - "30000-32767/tcp"  # typical NodePort range, optional but common
+
+k3s_service_file: "/etc/systemd/system/k3s.service"
+k3s_server_args: >
+  --cluster-init
+  --token my-secret-token
+  --node-name master-1
+  --node-ip {{master_node_ip}}
+  --disable traefik
+  --write-kubeconfig-mode=644

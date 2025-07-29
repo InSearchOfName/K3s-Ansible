@@ -1,0 +1,51 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for roles/all
+- name: update packages
+  package:
+    name: "*"
+    state: latest
+
+- name: install firewalld
+  package:
+    name: firewalld
+    state: present
+  notify: Enable and start firewalld service
+
+- name: add cidr for pods
+  firewalld:
+    zone: trusted
+    state: enabled
+    source: 10.42.0.0/16
+    permanent: true
+  notify: Restart firewalld service
+
+- name: add cidr for services
+  firewalld:
+    zone: trusted
+    state: enabled
+    source: 10.43.0.0/16
+    permanent: true
+  notify: Restart firewalld service
+
+- name: download k3s
+  get_url:
+    url: "{{ k3s_download_url }}"
+    dest: "{{ k3s_install_path }}"
+    mode: '0755'
+
+- name: Disable nm-cloud-setup.service
+  ansible.builtin.systemd:
+    name: nm-cloud-setup.service
+    enabled: no
+    state: stopped
+  ignore_errors: yes
+  notify: Reboot the system
+
+- name: Disable nm-cloud-setup.timer
+  ansible.builtin.systemd:
+    name: nm-cloud-setup.timer
+    enabled: no
+    state: stopped
+  ignore_errors: yes
+  notify: Reboot the system

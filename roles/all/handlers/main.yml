@@ -1,0 +1,18 @@
+#SPDX-License-Identifier: MIT-0
+---
+# handlers file for roles/all
+- name: Enable and start firewalld service
+  service:
+    name: firewalld
+    state: started
+    enabled: true
+
+- name: Restart firewalld service
+  service:
+    name: firewalld
+    state: restarted
+    enabled: true
+
+- name: Reboot the system
+  reboot:
+    reboot_timeout: 300

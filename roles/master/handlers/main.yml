@@ -1,0 +1,17 @@
+#SPDX-License-Identifier: MIT-0
+---
+# handlers file for roles/master
+- name: Restart firewalld service
+  service:
+    name: firewalld
+    state: restarted
+
+- name: Enable and start K3s service
+  service:
+    name: k3s
+    enabled: true
+    state: started
+
+- name: Reload systemd daemon
+  systemd:
+    daemon_reload: yes
