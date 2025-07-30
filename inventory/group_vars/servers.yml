@@ -1,19 +1,18 @@
-#SPDX-License-Identifier: MIT-0
----
-# vars file for roles/slaves
-#SPDX-License-Identifier: MIT-0<
 ports:
+  - "2379/tcp" # etcd communication 
+  - "2380/tcp" # etcd communication 
+  - "6443/tcp" # API Server
   - "6444/tcp" # Certs
   - "8472/udp" # Flannel this is a separate network so in ACLS specifiaclly target this group
   - "10250/tcp" # Metrics
   - "30000-32767/tcp"  # typical NodePort range, optional but common
 
-k3s_service_file: "/etc/systemd/system/k3s-agent.service"
-
-k3s_node_token: "{{ hostvars[groups['master'][0]]['k3s_node_token'] | default('') }}"
-
-k3s_agent_args: >
-  --server https://{{ master_node_ip }}:6443
+k3s_service_file_src: "k3s.server.service.j2"
+k3s_args: >
+  --server https://{{ server_node_ip }}:6443
   --token {{ k3s_node_token }}
   --node-name {{ ansible_hostname }}
   --node-ip {{ ansible_default_ipv4.address }}
+  --disable traefik
+  --write-kubeconfig-mode=644
+

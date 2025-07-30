@@ -1,9 +1,9 @@
 [Unit]
-Description=Lightweight Kubernetes Agent
+Description=Lightweight Kubernetes Server
 After=network.target
 
 [Service]
-ExecStart=/usr/local/bin/k3s agent {{ k3s_agent_args }}
+ExecStart=/usr/local/bin/k3s server {{ k3s_args }}
 Restart=on-failure
 LimitNOFILE=1048576
 
