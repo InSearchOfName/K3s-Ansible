@@ -1,5 +1,0 @@
-#SPDX-License-Identifier: MIT-0
----
-# vars file for roles/all
-k3s_download_url: "https://github.com/k3s-io/k3s/releases/download/v1.33.2%2Bk3s1/k3s"
-k3s_install_path: "/usr/local/bin/k3s"
