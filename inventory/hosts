@@ -1,12 +1,13 @@
-[master]
+[main-server]
 192.168.1.200
 
-[slaves]
-192.168.1.201
+[servers]
+192.168.1.210
+192.168.1.220
 
-[all_servers:children]
-master
-slaves
+[agents]
+192.168.1.230
+192.168.1.240
 
 [all:vars]
 ansible_connection=ssh
