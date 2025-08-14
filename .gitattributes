@@ -1,0 +1,8 @@
+# Treat all YAML files as Ansible
+*.yml linguist-language=Ansible
+*.yaml linguist-language=Ansible
+
+# Optional: mark roles, playbooks, and tasks directories
+roles/* linguist-language=Ansible
+playbooks/* linguist-language=Ansible
+tasks/* linguist-language=Ansible
