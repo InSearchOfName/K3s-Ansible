@@ -1,0 +1,12 @@
+ports:
+  - "6444/tcp" # Certs
+  - "8472/udp" # Flannel this is a separate network so in ACLS specifiaclly target this group
+  - "10250/tcp" # Metrics
+  - "30000-32767/tcp"  # typical NodePort range, optional but common
+k3s_args: >
+  --server https://{{ server_node_ip }}:6443
+  --token {{ k3s_node_token }}
+  --node-name {{ ansible_hostname }}
+  --node-ip {{ ansible_default_ipv4.address }}
+
+k3s_service_file_src: "k3s.agent.service.j2"
